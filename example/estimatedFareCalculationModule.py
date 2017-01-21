@@ -12,10 +12,18 @@ import random
 import time
 import json
 import googlemaps
+from django.http import HttpResponse
 
 from googlemaps import convert
 from googlemaps.convert import as_list
 
+def getEstFare(request):
+    if request.method == "GET":
+        origin = request.GET["origin"]
+        dest = request.GET["dest"]
+
+        a = estimateFareCalculate()
+        return HttpResponse(a.getEstimateFare(origin, dest))
 
 class estimateFareCalculate():
 
