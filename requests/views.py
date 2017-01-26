@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from rest_framework import generics, permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from requests.models import Trip_Request
+from django.http import JsonResponse
+import json
 from requests.serializers import Trip_Request
 
 #def driver_request(request_id, timestamp, source, destination):
@@ -22,7 +23,8 @@ def passenger_request(request):
     newRequest.status = "101"
     newRequest.driver_id = "NULL"
     newRequest.save()
-    return Response(request_id)
+    return HttpResponse("Done")
+
 
 
 @api_view(['GET', 'POST'])
@@ -30,7 +32,7 @@ def passenger_request(request):
 def get_status(request): #Function to return status of request, polled continously by passenger's app
     Id = request.data['id']
     req = Trip_Request.objects.get(request_id = Id)
-    return Response(req.status)
+    return HttpResponse(json.dumps(req.as_json()), content_type="application/json")
 
 @api_view(['GET', 'POST'])
 @permission_classes((permissions.AllowAny,))
