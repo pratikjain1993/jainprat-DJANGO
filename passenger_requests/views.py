@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 import json
 from driver import driver
-from requests.serializers import Trip_Request
+from passenger_requests.serializers import Trip_Request
 from testing.serializers import UserSerializer
 
 
@@ -28,7 +28,7 @@ def passenger_request(request):
     newRequest.destination= destination
     newRequest.timestamp= timestamp
     #newRequest.name = req.name
-    n#ewRequest.phone_no = req.phone
+    #newRequest.phone_no = req.phone
     newRequest.save()
     return HttpResponse("Done")
 

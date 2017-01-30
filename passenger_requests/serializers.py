@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from requests.models import Trip_Request
+from passenger_requests.models import Trip_Request
 
 
 class TripRequestSerializer(serializers.ModelSerializer):

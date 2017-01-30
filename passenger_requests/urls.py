@@ -1,12 +1,12 @@
 from django.conf.urls import url, include
 from django.contrib.auth.models import User
 from rest_framework import serializers, viewsets, routers
-from requests.views import passenger_request
-from requests.views import get_status
-from requests.views import get_driver
-from requests.views import finish
-from requests.views import get_passenger
-from requests.views import driver_response
+from passenger_requests.views import passenger_request
+from passenger_requests.views import get_status
+from passenger_requests.views import get_driver
+from passenger_requests.views import finish
+from passenger_requests.views import get_passenger
+from passenger_requests.views import driver_response
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

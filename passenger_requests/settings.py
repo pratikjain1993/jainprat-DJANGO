@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'requests',
+    'passenger_requests',
     'testing'
 ]
 
@@ -55,7 +55,7 @@ MIDDLEWARE = [
 
 ]
 
-ROOT_URLCONF = 'requests.urls'
+ROOT_URLCONF = 'passenger_requests.urls'
 
 TEMPLATES = [
     {
@@ -77,7 +77,7 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 
 
-WSGI_APPLICATION = 'requests.wsgi.application'
+WSGI_APPLICATION = 'passenger_requests.wsgi.application'
 
 
 # Database
