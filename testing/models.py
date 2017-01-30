@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+
 class User(models.Model):
     name = models.CharField(max_length=100)
     email= models.EmailField()
@@ -15,7 +16,6 @@ class User(models.Model):
 
     def __unicode__(self):
         return self.email
-
 
     def as_json(self):
         return dict(

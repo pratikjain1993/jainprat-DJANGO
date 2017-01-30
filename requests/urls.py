@@ -5,7 +5,8 @@ from requests.views import passenger_request
 from requests.views import get_status
 from requests.views import get_driver
 from requests.views import finish
-
+from requests.views import get_passenger
+from requests.views import driver_response
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -32,6 +33,8 @@ urlpatterns = [
     url(r'^api/request', passenger_request),
     url(r'^api/status', get_status),
     url(r'^api/driver', get_driver),
-    url(r'^api/complete', finish)
+    url(r'^api/response', driver_response),
+    url(r'^api/complete', finish),
+    url(r'^api/getpassenger', get_passenger)
 
 ]
