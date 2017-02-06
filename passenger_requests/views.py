@@ -19,7 +19,7 @@ def passenger_request(request):
     destination = request.data['dest']
     newRequest = Trip_Request()
    # req = UserSerializer.objects.get(id = request_id)
-    driver()
+    driver(request_id)
 
     newRequest.request_id = request_id
     newRequest.status = "101"
