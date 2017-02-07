@@ -31,6 +31,6 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/testclass', ListCreateTestClass.as_view()),
     url(r'^api/request', getMaxValue),
-    url(r'^api/estimatefare', getEstFare)
+    url(r'^api/estimatefare', getEstFare),
     url(r'^api/actualfare', getActFare)
 ]
