@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers, viewsets, routers
 from example.views import ListCreateTestClass
 from example.estimatedFareCalculationModule import getEstFare
+from example.actualFareCalculationModule import getActFare
 from example.views import getMaxValue
 
 # Serializers define the API representation.
@@ -31,4 +32,5 @@ urlpatterns = [
     url(r'^api/testclass', ListCreateTestClass.as_view()),
     url(r'^api/request', getMaxValue),
     url(r'^api/estimatefare', getEstFare)
+    url(r'^api/actualfare', getActFare)
 ]
