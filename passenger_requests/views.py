@@ -1,9 +1,7 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from rest_framework import generics, permissions
+from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from django.http import JsonResponse
 import json
 from driver import driver
 from passenger_requests.serializers import Trip_Request
@@ -19,7 +17,7 @@ def passenger_request(request):
     destination = request.data['dest']
     newRequest = Trip_Request()
    # req = UserSerializer.objects.get(id = request_id)
-    driver()
+    string = driver(request_id)
 
     newRequest.request_id = request_id
     newRequest.status = "101"
@@ -27,12 +25,13 @@ def passenger_request(request):
     newRequest.source = source
     newRequest.destination= destination
     newRequest.timestamp= timestamp
-    #newRequest.name = req.name
-    #newRequest.phone_no = req.phone
+    newRequest.name = "NULL"
+    newRequest.phone_no = "NULL"
     newRequest.save()
-    return HttpResponse("Done")
+    return HttpResponse(string)
 
-@api_view(['GET', 'POST'])
+
+@api_view(['GET','POST'])
 @permission_classes((permissions.AllowAny,))
 def get_passenger(request):
     Id = request.data['id']
@@ -45,7 +44,8 @@ def get_passenger(request):
 def get_status(request): #Function to return status of request, polled continously by passenger's app
     Id = request.data['id']
     req = Trip_Request.objects.get(request_id = Id)
-    return Response(req.status)
+    return Response({'status': req.status})
+
 
 @api_view(['GET', 'POST'])
 @permission_classes((permissions.AllowAny,))
@@ -54,6 +54,8 @@ def get_driver(request): #Function to return driver id is called when status=303
     req = Trip_Request.objects.get(request_id = Id)
     return Response(req.driver_id)
 
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
 def driver_response(request):
     passenger_id = request.data['request_id']
     driver_id = request.data['id']
@@ -61,6 +63,7 @@ def driver_response(request):
     req.driver_id = driver_id
     req.status = 202
     req.save()
+    return HttpResponse("Done")
 
 
 @api_view(['GET', 'POST'])

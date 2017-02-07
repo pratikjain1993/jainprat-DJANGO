@@ -2,16 +2,16 @@ import requests
 import json
 
 
-def driver():
+def driver(request_id):
     header = {"Content-Type": "application/json; charset=utf-8",
               "Authorization": "Basic ZDgwYjk1MmItOGM5Mi00MmFlLWExNjMtZGE0ZWFiZmExNjY2"}
     payload = {"app_id": "253ee936-0d98-4b7a-90a7-12c92db25f9d",
                "included_segments": ["Active Users"],
-               "contents": {"en": "english message "}}
+               "contents": {"en": "english message ","en":request_id}}
 
     req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
 
-    print(req.status_code, req.reason)
+    return(req.status_code, req.reason, request_id)
 
     # sending notification include rest api key
     '''curl --include \

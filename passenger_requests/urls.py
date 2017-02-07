@@ -35,6 +35,6 @@ urlpatterns = [
     url(r'^api/driver', get_driver),
     url(r'^api/response', driver_response),
     url(r'^api/complete', finish),
-    url(r'^api/getpassenger', get_passenger)
+    url(r'^api/get_passenger', get_passenger)
 
 ]
