@@ -1,12 +1,15 @@
 from django.conf.urls import url, include
 from django.contrib.auth.models import User
 from rest_framework import serializers, viewsets, routers
+from django.conf.urls import url, include
+from . import views
 from passenger_requests.views import passenger_request
 from passenger_requests.views import get_status
 from passenger_requests.views import get_driver
 from passenger_requests.views import finish
 from passenger_requests.views import get_passenger
 from passenger_requests.views import driver_response
+from passenger_requests.views import register
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -35,6 +38,12 @@ urlpatterns = [
     url(r'^api/driver', get_driver),
     url(r'^api/response', driver_response),
     url(r'^api/complete', finish),
-    url(r'^api/get_passenger', get_passenger)
+    url(r'^api/register', register),
+    url(r'^api/get_passenger', get_passenger),
+    #url(r'^api/get_passenger/(-?\d+)/$', get_passenger),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^checkmatch$', views.checkmatch, name='checkmatch'),
+    url(r'^getuser$', views.getuser, name='getuser')
+
 
 ]
