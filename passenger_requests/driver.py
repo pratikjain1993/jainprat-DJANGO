@@ -2,21 +2,18 @@ import requests
 import json
 
 
-<<<<<<< HEAD
 def driver(id):
     header = {"Content-Type": "application/json; charset=utf-8",
               "Authorization": "Basic ZDgwYjk1MmItOGM5Mi00MmFlLWExNjMtZGE0ZWFiZmExNjY2"}
     payload = {"app_id": "253ee936-0d98-4b7a-90a7-12c92db25f9d",
                "included_segments": ["Active Users"],
                "data": {"id":id}, 
-=======
 def driver(request_id):
     header = {"Content-Type": "application/json; charset=utf-8",
               "Authorization": "Basic ZDgwYjk1MmItOGM5Mi00MmFlLWExNjMtZGE0ZWFiZmExNjY2"}
     payload = {"app_id": "253ee936-0d98-4b7a-90a7-12c92db25f9d",
                "included_segments": ["All"],
                "data": {"id":request_id},
->>>>>>> 7e2fe8978978479c22acb21489b2322cdb3812ea
                "contents": {"en": "english message "}}
 
     req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
