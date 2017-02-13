@@ -81,13 +81,9 @@ def register(request):
 def passenger_request(request):
     request_id = request.data['id']
     newRequest = Trip_Request()
-<<<<<<< HEAD
    # req = UserSerializer.objects.get(id = request_id)
     driver(request_id)
-
-=======
     req = User.objects.get(id = request_id)
->>>>>>> 7e2fe8978978479c22acb21489b2322cdb3812ea
     newRequest.request_id = request_id
     newRequest.status = "101"
     newRequest.driver_id = "NULL"
