@@ -1,4 +1,3 @@
-
 import json
 from driver import driver
 from passenger_requests.serializers import Trip_Request
