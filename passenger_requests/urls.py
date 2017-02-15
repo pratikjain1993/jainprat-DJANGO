@@ -10,6 +10,7 @@ from passenger_requests.views import finish
 from passenger_requests.views import get_passenger
 from passenger_requests.views import driver_response
 from passenger_requests.views import register
+from passenger_requests.views import endjourney
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -37,6 +38,7 @@ urlpatterns = [
     url(r'^api/status', get_status),
     url(r'^api/driver', get_driver),
     url(r'^api/response', driver_response),
+    url(r'^api/endjourney', endjourney ),
     url(r'^api/complete', finish),
     url(r'^api/register', register),
     url(r'^api/get_passenger', get_passenger),

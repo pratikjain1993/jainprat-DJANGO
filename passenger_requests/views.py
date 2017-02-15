@@ -138,6 +138,16 @@ def driver_response(request):
 
 @api_view(['GET', 'POST'])
 @permission_classes((permissions.AllowAny,))
+def endjourney(request):  # Function to finish journey, called when the passenger reaches its destination
+    Id = request.data['id']
+    req = Trip_Request.objects.get(request_id=Id)
+    req.status = 404
+    req.save()
+    return HttpResponse("Done")
+
+
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
 def finish(request): # Function to delete request record called after completion of request when driver id is received by passenger's app
     Id = request.data['id']
     Trip_Request.objects.get(request_id = Id).delete()
