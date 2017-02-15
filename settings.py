@@ -55,7 +55,7 @@ MIDDLEWARE = [
 
 ]
 
-ROOT_URLCONF = 'passenger_requests.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {

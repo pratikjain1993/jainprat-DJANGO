@@ -34,7 +34,7 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/request', passenger_request),
+    url(r'^/request', passenger_request),
     url(r'^api/status', get_status),
     url(r'^api/driver', get_driver),
     url(r'^api/response', driver_response),
