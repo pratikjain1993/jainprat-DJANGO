@@ -3,6 +3,8 @@ import base64
 import collections
 import datetime
 from datetime import timedelta
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework import generics, permissions
 import functools
 import hashlib
 import hmac
@@ -17,10 +19,11 @@ from django.http import HttpResponse
 from googlemaps import convert
 from googlemaps.convert import as_list
 
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
 def getEstFare(request):
-    if request.method == "GET":
-        origin = request.GET["origin"]
-        dest = request.GET["dest"]
+        origin = request.data["origin"]
+        dest = request.data["dest"]
 
         a = estimateFareCalculate()
         return HttpResponse(a.getEstimateFare(origin, dest))

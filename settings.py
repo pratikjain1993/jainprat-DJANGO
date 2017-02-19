@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'passenger_requests',
-    'testing'
+    'testing',
+    'example'
 ]
 
 MIDDLEWARE = [

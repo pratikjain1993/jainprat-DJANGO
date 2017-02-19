@@ -20,4 +20,4 @@ class UserViewSet(viewsets.ModelViewSet):
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
-urlpatterns = patterns('', (r'^', include('passenger_requests.urls')))
+urlpatterns = patterns('',(r'^', include('example.urls')))
