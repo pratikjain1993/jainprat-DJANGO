@@ -3,14 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers, viewsets, routers
 from django.conf.urls import url, include
 from . import views
-from passenger_requests.views import passenger_request
-from passenger_requests.views import get_status
-from passenger_requests.views import get_driver
-from passenger_requests.views import finish
-from passenger_requests.views import get_passenger
-from passenger_requests.views import driver_response
-from passenger_requests.views import register
-from passenger_requests.views import endjourney
+from passenger_requests.views import passenger_request, get_status, get_driver, finish, get_passenger,driver_response,register,endjourney
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -46,6 +39,4 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^checkmatch$', views.checkmatch, name='checkmatch'),
     url(r'^getuser$', views.getuser, name='getuser')
-
-
 ]

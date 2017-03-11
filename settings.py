@@ -41,13 +41,15 @@ INSTALLED_APPS = [
     'corsheaders',
     'passenger_requests',
     'testing',
-    'example'
+    'example',
+    'driver_request'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.contrib.gis',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -55,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
+GEOS_LIBRARY_PATH = 'C:/OSGeo4W64/bin/geos_c.dll'
 
 ROOT_URLCONF = 'urls'
 

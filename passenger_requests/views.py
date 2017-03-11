@@ -1,7 +1,7 @@
 import json
-from driver import driver
+from driver_matching import driver_matching
 from passenger_requests.serializers import Trip_Request
-from passenger_requests.models import User
+from testing.models import User
 from testing.serializers import UserSerializer
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -13,28 +13,33 @@ from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 
 
-#curl -X POST -F id=7 -F slat=ew -F slong=q -F dlat=eww -F dlong -F ts=ewww  192.168.1.103:8000/api/request
+#curl -X POST -F id=7 -F slat=41.49008 -F slong=-71.312796 -F dlat=41.499498 -F dlong=-81.695391 -F ts=ewww localhost:8000/api/request
 
 @api_view(['GET', 'POST'])
 @permission_classes((permissions.AllowAny,))
 def passenger_request(request):
     request_id = request.data['id']
+    try:
+        req = User.objects.get(id=request_id)
+    except:
+        return HttpResponse("User not found")
+
     newRequest = Trip_Request()
-    driver(request_id)
-    req = User.objects.get(id = request_id)
     newRequest.request_id = request_id
     newRequest.status = "101"
     newRequest.driver_id = "NULL"
     newRequest.source_lat = request.data['slat']
     newRequest.source_long = request.data['slong']
-    newRequest.destination_lat= request.data['dlat']
-    newRequest.destination_long= request.data['dlong']
-    newRequest.timestamp= request.data['ts']
+    newRequest.destination_lat = request.data['dlat']
+    newRequest.destination_long = request.data['dlong']
+    newRequest.timestamp = request.data['ts']
     newRequest.name = req.name
     newRequest.phone_no = req.phone
     newRequest.save()
-    string = driver(request_id)
+    string = driver_matching(request_id)
     return HttpResponse(string)
+
+
 
 
 @api_view(['GET', 'POST'])
@@ -73,15 +78,6 @@ def driver_response(request):
     req.save()
     return HttpResponse("Done")
 
-
-@api_view(['GET', 'POST'])
-@permission_classes((permissions.AllowAny,))
-def endjourney(request):  # Function to finish journey, called when the passenger reaches its destination
-    Id = request.data['id']
-    req = Trip_Request.objects.get(request_id=Id)
-    req.status = 404
-    req.save()
-    return HttpResponse("Done")
 
 
 @api_view(['GET', 'POST'])
