@@ -7,7 +7,7 @@ def send_pushnotif(player_id, request_id):
     payload = {"app_id": "253ee936-0d98-4b7a-90a7-12c92db25f9d",
                "included_segments": ["All"],
                "data": {"id":request_id},
-               "include_player_ids": ["player_id"],
+               "include_player_ids": [player_id],
                "contents": {"en": "english message "}}
 
     req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))

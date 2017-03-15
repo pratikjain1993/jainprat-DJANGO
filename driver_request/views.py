@@ -25,14 +25,18 @@ def driver_request(request):
     newRequest.save()
     return HttpResponse("Done")
 
+@api_view(['GET','POST'])
+@permission_classes((permissions.AllowAny,))
 def player_id(request):
-    request_id = request.data['id']
-    req = Driver_Request.objects.get(id=request_id)
+    Id = request.data['id']
+    req = Driver_Request.objects.get(request_id=Id)
     req.player_id = request.data['player_id']
+    req.save()
+    return HttpResponse("Done")
 
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET','POST'])
 @permission_classes((permissions.AllowAny,))
 def end_journey(request): # Function to delete request record called after completion of request when driver id is received by passenger's app
     Id = request.data['id']
@@ -41,7 +45,7 @@ def end_journey(request): # Function to delete request record called after compl
     req.save()
     return HttpResponse("Done")
 
-@api_view(['GET', 'POST'])
+@api_view(['GET','POST'])
 @permission_classes((permissions.AllowAny,))
 def driver_complete(request): # Function to delete request record called after completion of request when driver id is received by passenger's app
     Id = request.data['id']

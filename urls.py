@@ -3,7 +3,7 @@ from django.conf.urls import url, include
 from django.conf.urls import patterns
 from django.contrib.auth.models import User
 from rest_framework import serializers, viewsets, routers
-from passenger_requests.views import passenger_request,get_status,get_driver,get_passenger, driver_response
+from passenger_requests.views import passenger_request,get_status,get_driver,get_passenger, driver_response, complete
 from testing.views import checkmatch,register,checkproof,picupload,forgetpass
 from example.estimatedFareCalculationModule import getEstFare
 from example.actualFareCalculationModule import getActFare
@@ -35,9 +35,9 @@ urlpatterns = [
 
     url(r'^driver_request', driver_request),
     url(r'^player_id', player_id),
-    url(r'^endjourney', endjourney),
+    url(r'^endjourney', end_journey),
     url(r'^driver_complete', driver_complete),
-    
+
     url(r'^api/request', passenger_request),
     url(r'^api/status', get_status),
     url(r'^api/driver', get_driver),
