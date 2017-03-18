@@ -3,7 +3,6 @@ from testing.models import User
 from passenger_requests.models import Trip_Request
 from geopy.distance import vincenty
 from driver import send_pushnotif
-from distance_calculation_filter import filter
 import simplejson, urllib
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -40,13 +39,16 @@ def driver_matching(passenger_id):
     passenger_source =  req.source_lat + "," + req.source_long
     passenger_destination = req.destination_lat + "," + req.destination_long
 
+    driver_list = []
 
     try:
         for driver in Driver_Request.objects.all():
             driver_source = driver.source_lat + "," + driver.source_long
             driver_destination = driver.destination_lat + "," + driver.destination_long
             if (filter(passenger_source, passenger_destination,driver_source,driver_destination)=='TRUE'):
-                send_pushnotif(driver.player_id, passenger_id )
+                driver_list.append(driver.player_id )
+        send_pushnotif(driver_list, passenger_id)
+
         return ("Notifications sent")
     except:
         return ("No drivers")
