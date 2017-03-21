@@ -13,9 +13,7 @@ from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 
 
-#curl -X POST -F id=7 -F slat=41.49008 -F slong=-71.312796 -F dlat=41.499498 -F dlong=-81.695391 -F ts=ewww localhost:8000/api/request
-
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
 def passenger_request(request):
     request_id = request.data['id']
@@ -40,9 +38,7 @@ def passenger_request(request):
     return HttpResponse(string)
 
 
-
-
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
 def get_passenger(request):
     Id = request.data['id']
@@ -50,23 +46,23 @@ def get_passenger(request):
     return HttpResponse(json.dumps(req.as_json()), content_type="application/json")
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
-def get_status(request): #Function to return status of request, polled continously by passenger's app
+def get_status(request):
     Id = request.data['id']
     req = Trip_Request.objects.get(request_id = Id)
     return HttpResponse(json.dumps(req.as_json()), content_type="application/json")
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
-def get_driver(request): #Function to return driver id is called when status=303 ie driver is found
+def get_driver(request):
     Id = request.data['id']
     req = Trip_Request.objects.get(request_id = Id)
     return Response(req.driver_id)
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
 def driver_response(request):
     passenger_id = request.data['request_id']
@@ -74,18 +70,20 @@ def driver_response(request):
     req.driver_id = request.data['id']
     req.driver_lat = request.data['lat']
     req.driver_long = request.data['long']
-    req.status = 202
+    req.status = "202"
     req.save()
     return HttpResponse("Done")
 
 
-
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
-def complete(request): # Function to delete request record called after completion of request when driver id is received by passenger's app
-    Id = request.data['id']
-    Trip_Request.objects.get(request_id = Id).delete()
+def accept_driver(request):
+    passenger_id = request.data['request_id']
+    req = Trip_Request.objects.get(request_id = passenger_id)
+    req.status = "404"
+    req.save()
     return HttpResponse("Done")
+
 
 
 

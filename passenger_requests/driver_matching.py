@@ -18,7 +18,6 @@ def distance_time(orig_coord,dest_coord):
     return (distance, time)
 
 
-
 def filter( passenger_source, passenger_destination,driver_source,driver_destination):
     driver_distance, driver_time = distance_time(driver_source, driver_destination)
     d1,t1 = distance_time(driver_source,passenger_source)
@@ -26,32 +25,38 @@ def filter( passenger_source, passenger_destination,driver_source,driver_destina
     d3,t3= distance_time(passenger_destination,driver_destination)
     driver_passenger_distance = d1+d2+d3
     driver_passenger_time = t1 + t2 +t3
-
-    if (driver_passenger_distance-driver_distance <=6 and driver_passenger_time - driver_time <= 40):
+    d= driver_passenger_distance-driver_distance
+    t = driver_passenger_time - driver_time
+    if ((d < 6) and (t<40)):
+        print ("Filtered")
         return ("TRUE")
     else:
+        print ("Not filtered")
         return ("FALSE")
-
 
 
 def driver_matching(passenger_id):
     req = Trip_Request.objects.get(request_id=passenger_id)
-    passenger_source =  req.source_lat + "," + req.source_long
+    passenger_source = req.source_lat + "," + req.source_long
     passenger_destination = req.destination_lat + "," + req.destination_long
-
     driver_list = []
+    not_empty = 0
 
-    try:
-        for driver in Driver_Request.objects.all():
-            driver_source = driver.source_lat + "," + driver.source_long
-            driver_destination = driver.destination_lat + "," + driver.destination_long
-            if (filter(passenger_source, passenger_destination,driver_source,driver_destination)=='TRUE'):
-                driver_list.append(driver.player_id )
-        send_pushnotif(driver_list, passenger_id)
+    for driver in Driver_Request.objects.all():
+        driver_source = driver.source_lat + "," + driver.source_long
+        driver_destination = driver.destination_lat + "," + driver.destination_long
+        if (filter(passenger_source, passenger_destination, driver_source, driver_destination) == "TRUE"):
+            driver_list.append(driver.player_id)
+            not_empty = 1
 
-        return ("Notifications sent")
-    except:
-        return ("No drivers")
+    if (not_empty == 0):
+        req.status = 303
+        req.save()
+        return ("No Drivers Found")
+
+    send_pushnotif(driver_list, passenger_id)
+    return ("Notifications sent")
+
 
 
 

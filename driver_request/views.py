@@ -34,20 +34,29 @@ def player_id(request):
     req.save()
     return HttpResponse("Done")
 
+def start_journey(request):
+    Id = request.data['id']
+    req = Trip_Request.objects.get(request_id=Id)
+    req.status = 505
+    req.save()
+    return HttpResponse("Done")
+
 
 
 @api_view(['GET','POST'])
 @permission_classes((permissions.AllowAny,))
-def end_journey(request): # Function to delete request record called after completion of request when driver id is received by passenger's app
+def end_journey(request):
     Id = request.data['id']
     req = Trip_Request.objects.get(request_id=Id)
-    req.status = 404
+    req.status = 606
     req.save()
     return HttpResponse("Done")
 
 @api_view(['GET','POST'])
 @permission_classes((permissions.AllowAny,))
-def driver_complete(request): # Function to delete request record called after completion of request when driver id is received by passenger's app
+def complete(request):
     Id = request.data['id']
+    passenger_id = request.data['passenger_id']
+    Trip_Request.objects.get(request_id=passenger_id).delete()
     Driver_Request.objects.get(request_id = Id).delete()
     return HttpResponse("Done")
