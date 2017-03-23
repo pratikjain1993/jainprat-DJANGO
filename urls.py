@@ -4,10 +4,11 @@ from django.conf.urls import patterns
 from django.contrib.auth.models import User
 from rest_framework import serializers, viewsets, routers
 from passenger_requests.views import passenger_request,get_status,get_driver,get_passenger,driver_response,accept_driver
-from testing.views import checkmatch,register,checkproof,picupload,forgetpass
+from testing.views import checkmatch,register,checkproof,picupload,forgetpass, getAvgRating
 from example.estimatedFareCalculationModule import getEstFare
 from example.actualFareCalculationModule import getActFare
-from driver_request.views import driver_request, player_id, end_journey, complete
+from driver_request.views import driver_request, player_id, end_journey, complete, start_journey
+
 # Serializers define the API representation.
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -33,6 +34,8 @@ urlpatterns = [
     url(r'^checkproof$', checkproof),
     url(r'^picupload$', picupload),
     url(r'^forgetpass$', forgetpass),
+
+    url(r'^rating', getAvgRating),
 
     url(r'^driver_request', driver_request),
     url(r'^player_id', player_id),

@@ -124,6 +124,13 @@ def forgetpass(request):
             server.quit()
             return Response("done")
 
-            
+def getAvgRating(request):
+    number = request.data['rating']
+    userid = request.data['userid']
+    rating_user = User.get(Userid=userid)
+    rating_user.number_of_ratings += 1
+    rating_user.avg_rating = (rating_user.avg_rating * (rating_user.number_of_ratings-1) + number)/ rating_user.number_of_ratings
+    rating_user.save()
+    return HttpResponse("")
 
 	

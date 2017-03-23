@@ -80,6 +80,7 @@ def driver_response(request):
 def accept_driver(request):
     passenger_id = request.data['request_id']
     req = Trip_Request.objects.get(request_id = passenger_id)
+    req.driver_accept = 'True'
     req.status = "404"
     req.save()
     return HttpResponse("Done")

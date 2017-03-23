@@ -15,6 +15,10 @@ class Trip_Request(models.Model):
     timestamp = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     phone_no = models.CharField(max_length=200)
+    actual_fare = models.FloatField(null= True)
+    driver_accept = models.BooleanField(default = False)
+    payment_done = models.BooleanField(default = False)
+
 
     def as_json(self):
         return dict(
@@ -29,7 +33,10 @@ class Trip_Request(models.Model):
             driver_long = self.driver_long,
             timestamp = self.timestamp,
             name = self.name,
-            phone_no = self.phone_no)
+            phone_no = self.phone_no,
+            actual_fare = self.actual_fare,
+            driver_accept = self.phone_no,
+            payment_done = self.payment_done )
 
 
 

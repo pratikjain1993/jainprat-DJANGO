@@ -12,7 +12,8 @@ class User(models.Model):
     carno= models.CharField(max_length=100)
     identity = models.FileField(null = True, max_length = 10485760)
     password = models.CharField(max_length=100)
-    rating = models.DecimalField(max_digits=4, decimal_places=2)
+    avg_rating = models.DecimalField(max_digits=4, decimal_places=2)
+    number_of_ratings = models.IntegerField()
 
     def __unicode__(self):
         return self.email
@@ -27,5 +28,6 @@ class User(models.Model):
             carno = self.carno,
             identity = self.identity,
             password = self.password,
-            rating =self.rating
+            avg_rating =self.avg_rating,
+            number_of_ratings = self.number_of_ratings
         )

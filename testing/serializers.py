@@ -10,4 +10,5 @@ class UserSerializer(serializers.Serializer):
     carno= serializers.CharField(max_length=100)
     identity = serializers.FileField()
     password = serializers.CharField(max_length=100)
-    rating = serializers.DecimalField(max_digits=4, decimal_places=2)
+    avg_rating = serializers.DecimalField(max_digits=4, decimal_places=2)
+    number_of_ratings = serializers.IntegerField()
