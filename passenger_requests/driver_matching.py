@@ -13,8 +13,6 @@ def distance_time(orig_coord,dest_coord):
     result= simplejson.load(urllib.urlopen(url))
     time = (result['rows'][0]['elements'][0]['duration']['value'])/60
     distance = (result['rows'][0]['elements'][0]['distance']['value'])/1000
-    print time
-    print distance
     return (distance, time)
 
 
@@ -39,6 +37,7 @@ def driver_matching(passenger_id):
     req = Trip_Request.objects.get(request_id=passenger_id)
     passenger_source = req.source_lat + "," + req.source_long
     passenger_destination = req.destination_lat + "," + req.destination_long
+
     driver_list = []
     not_empty = 0
 

@@ -15,8 +15,8 @@ class Trip_Request(models.Model):
     timestamp = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     phone_no = models.CharField(max_length=200)
-    actual_fare = models.FloatField(null= True)
-    driver_accept = models.BooleanField(default = False)
+    actual_fare = models.CharField(max_length=10)
+    driver_accept = models.CharField(max_length = 100)
     payment_done = models.BooleanField(default = False)
 
 
@@ -35,8 +35,8 @@ class Trip_Request(models.Model):
             name = self.name,
             phone_no = self.phone_no,
             actual_fare = self.actual_fare,
-            driver_accept = self.phone_no,
-            payment_done = self.payment_done )
+            driver_accept = self.driver_accept,
+            payment_done = self.payment_done)
 
 
 

@@ -11,7 +11,8 @@ def send_pushnotif(player_ids, request_id):
                "contents": {"en": "english message "}}
 
     req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
-    return(req.status_code, req.reason, request_id)
+    print(req.reason, req.status_code)
+    return(req.reason, req.status_code)
 
     # sending notification include rest api key
     '''curl --include \

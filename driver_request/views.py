@@ -17,10 +17,10 @@ from django.core.exceptions import ObjectDoesNotExist
 def driver_request(request):
     newRequest = Driver_Request()
     newRequest.request_id = request.data['id']
-    newRequest.source_lat = request.data['slat']
-    newRequest.source_long = request.data['slong']
-    newRequest.destination_lat= request.data['dlat']
-    newRequest.destination_long= request.data['dlong']
+    newRequest.source_lat = request.data['slat1']
+    newRequest.source_long = request.data['slong1']
+    newRequest.destination_lat= request.data['dlat1']
+    newRequest.destination_long= request.data['dlong1']
     newRequest.timestamp= request.data['ts']
     newRequest.save()
     return HttpResponse("Done")
@@ -34,6 +34,8 @@ def player_id(request):
     req.save()
     return HttpResponse("Done")
 
+@api_view(['GET','POST'])
+@permission_classes((permissions.AllowAny,))
 def start_journey(request):
     Id = request.data['id']
     req = Trip_Request.objects.get(request_id=Id)

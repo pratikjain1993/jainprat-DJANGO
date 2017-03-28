@@ -1,8 +1,8 @@
 import json
 from driver_matching import driver_matching
-from passenger_requests.serializers import Trip_Request
-from testing.models import User
+from passenger_requests.models import Trip_Request
 from testing.serializers import UserSerializer
+from testing.models import User
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -26,10 +26,10 @@ def passenger_request(request):
     newRequest.request_id = request_id
     newRequest.status = "101"
     newRequest.driver_id = "NULL"
-    newRequest.source_lat = request.data['slat']
-    newRequest.source_long = request.data['slong']
-    newRequest.destination_lat = request.data['dlat']
-    newRequest.destination_long = request.data['dlong']
+    newRequest.source_lat = request.data['slat1']
+    newRequest.source_long = request.data['slong1']
+    newRequest.destination_lat = request.data['dlat1']
+    newRequest.destination_long = request.data['dlong1']
     newRequest.timestamp = request.data['ts']
     newRequest.name = req.name
     newRequest.phone_no = req.phone
@@ -48,18 +48,13 @@ def get_passenger(request):
 
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
-def get_status(request):
+def get_driver(request): #Function to return driver id is called when status=202 ie driver is found
     Id = request.data['id']
-    req = Trip_Request.objects.get(request_id = Id)
-    return HttpResponse(json.dumps(req.as_json()), content_type="application/json")
+    passenger = Trip_Request.objects.get(request_id = Id)
+    driver_id = passenger.driver_id
+    driver = User.objects.get(id = driver_id)
+    return HttpResponse(json.dumps(driver.as_json()), content_type="application/json")
 
-
-@api_view(['POST'])
-@permission_classes((permissions.AllowAny,))
-def get_driver(request):
-    Id = request.data['id']
-    req = Trip_Request.objects.get(request_id = Id)
-    return Response(req.driver_id)
 
 
 @api_view(['POST'])
@@ -68,8 +63,6 @@ def driver_response(request):
     passenger_id = request.data['request_id']
     req = Trip_Request.objects.get(request_id = passenger_id)
     req.driver_id = request.data['id']
-    req.driver_lat = request.data['lat']
-    req.driver_long = request.data['long']
     req.status = "202"
     req.save()
     return HttpResponse("Done")
@@ -79,11 +72,39 @@ def driver_response(request):
 @permission_classes((permissions.AllowAny,))
 def accept_driver(request):
     passenger_id = request.data['request_id']
+    flag = request.data['flag']
     req = Trip_Request.objects.get(request_id = passenger_id)
-    req.driver_accept = 'True'
-    req.status = "404"
-    req.save()
+
+    if(flag=="1"):
+        req.driver_accept = "1"
+        req.status = "404"
+        req.save()
+    else:
+        req.driver_accept = "-1"
+        req.save()
+
     return HttpResponse("Done")
+
+
+def delete(request):
+    passenger_id = request.data['id']
+    req = Trip_Request.objects.get(request_id = passenger_id)
+    Driver_Request.objects.get(request_id=req.driver_id).delete()
+    req.delete()
+    return HttpResponse("Done")
+
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def check_payment(request):
+    passenger_id = request.data['id']
+    req = Trip_Request.objects.get(request_id = passenger_id)
+    if (req.payment_done == True):
+        Driver_Request.objects.get(request_id=req.driver_id).delete()
+        req.delete()
+        return HttpResponse("True")
+    else:
+        return HttpResponse("False")
 
 
 
