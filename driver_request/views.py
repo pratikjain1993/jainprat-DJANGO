@@ -56,6 +56,15 @@ def end_journey(request):
 
 @api_view(['GET','POST'])
 @permission_classes((permissions.AllowAny,))
+def paid(request):
+    Id = request.data['id']
+    req = Trip_Request.objects.get(request_id=Id)
+    req.payment_done = True
+    req.save()
+    return HttpResponse("Done")
+
+@api_view(['GET','POST'])
+@permission_classes((permissions.AllowAny,))
 def complete(request):
     Id = request.data['id']
     passenger_id = request.data['passenger_id']
